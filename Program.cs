@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SwaggerEndpoint.Models;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -2627,9 +2628,21 @@ namespace SwaggerEndpoint
 
             Console.WriteLine(jsonString);
 
-            SwaggerDocument SwaggerDocument = JsonConvert.DeserializeObject<SwaggerDocument>(jsonString, settings);
+            SwaggerDocument swaggerDocument = JsonConvert.DeserializeObject<SwaggerDocument>(jsonString, settings);
 
-            Console.WriteLine(SwaggerDocument);
+           Dictionary<string, Schemas>  modelsSwagger = swaggerDocument.Components.Schemas;
+
+            List<Paths> valuesList = new List<Paths>(swaggerDocument.Paths.Values);
+
+            foreach (var item in valuesList)
+            {
+                Console.WriteLine(item);
+            }
+
+            Schemas schema = modelsSwagger["UserDTO"];
+            Console.WriteLine(schema);
+
+            Console.WriteLine(swaggerDocument);
 
         }
 

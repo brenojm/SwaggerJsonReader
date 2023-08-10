@@ -6,5 +6,8 @@ namespace SwaggerEndpoint.Models
     {
         [JsonProperty("$ref")]
         public string @ref { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }

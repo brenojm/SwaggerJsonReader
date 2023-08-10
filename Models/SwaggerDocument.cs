@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SwaggerEndpoint.Models
 {
-    internal class SwaggerDocument
+    public class SwaggerDocument
     {
         [JsonProperty("openapi")]
         public string OpenAPI;
@@ -27,8 +27,8 @@ namespace SwaggerEndpoint.Models
         public Component Components;
 
         //Criar classe
-        //[JsonProperty("security")]
-        //public Security Security;
+        [JsonProperty("security")]
+        public List<Security> Security;
 
     }
 }
