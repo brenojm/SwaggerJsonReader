@@ -27,8 +27,6 @@ Contributions are welcome! If you have ideas for improvements, new features, or 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](/LICENSE) file for more details.
-
 We hope this tool proves valuable to you in your tasks of analyzing and exploring Swagger JSON documents. If you have any questions or suggestions, don't hesitate to open an issue in this repository.
 
 Enjoy exploring and working with Swagger!
