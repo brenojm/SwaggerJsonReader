@@ -9,9 +9,9 @@ namespace SwaggerEndpoint.Models.DTOs
     public class PathDTO
     {
         public string Path { get; set; }
-        public List<Method> methods { get; set; }
+        public List<MethodDTO> methods { get; set; }
 
-        public PathDTO(string path, List<Method> methods)
+        public PathDTO(string path, List<MethodDTO> methods)
         {
             Path = path;
             this.methods = methods;
