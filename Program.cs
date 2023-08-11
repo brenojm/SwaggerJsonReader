@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SwaggerEndpoint.Models;
+using SwaggerEndpoint.Models.DTOs;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -11,10 +12,10 @@ namespace SwaggerEndpoint
     {
         static async Task Main(string[] args)
         {
-            //string swaggerUrl = "http://186.216.202.85:9091/swagger/v1/swagger.json";
-            //using var httpClient = new HttpClient();
-            //HttpResponseMessage response = await httpClient.GetAsync(swaggerUrl);
-            //string jsonString = await response.Content.ReadAsStringAsync();
+            string swaggerUrl = "https://petstore3.swagger.io/api/v3/openapi.json";
+            using var httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync(swaggerUrl);
+            string jsonStringServer = await response.Content.ReadAsStringAsync();
             string jsonString = @"{
   ""openapi"": ""3.0.1"",
   ""info"": {
@@ -2626,21 +2627,53 @@ namespace SwaggerEndpoint
             var settings = new JsonSerializerSettings();
             settings.MetadataPropertyHandling = MetadataPropertyHandling.Ignore;
 
-            Console.WriteLine(jsonString);
+            //Console.WriteLine(jsonString);
 
-            SwaggerDocument swaggerDocument = JsonConvert.DeserializeObject<SwaggerDocument>(jsonString, settings);
+            SwaggerDocument swaggerDocument = JsonConvert.DeserializeObject<SwaggerDocument>(jsonStringServer, settings);
 
            Dictionary<string, Schemas>  modelsSwagger = swaggerDocument.Components.Schemas;
 
-            List<Paths> valuesList = new List<Paths>(swaggerDocument.Paths.Values);
+            List<PathDTO> pathsDTO = new List<PathDTO>();
 
-            foreach (var item in valuesList)
+            foreach (var item in swaggerDocument.Paths)
             {
-                Console.WriteLine(item);
+                //Console.WriteLine(item.Key);
+                //Console.WriteLine(item.Value);
+                List<Method> methodsPath = new List<Method>();
+
+                if (item.Value.Get != null)
+                {
+                    methodsPath.Add(item.Value.Get);
+                } else if (item.Value.Post != null)
+                {
+                    methodsPath.Add(item.Value.Post);
+                }
+                else if (item.Value.Put != null)
+                {
+                    methodsPath.Add(item.Value.Put);
+                }
+                else if (item.Value.Patch != null)
+                {
+                    methodsPath.Add(item.Value.Patch);
+                }
+                else if (item.Value.Delete != null)
+                {
+                    methodsPath.Add(item.Value.Delete);
+                }
+
+                PathDTO pathDTO = new PathDTO(item.Key, methodsPath);
+                pathsDTO.Add(pathDTO);
+
             }
 
-            Schemas schema = modelsSwagger["UserDTO"];
-            Console.WriteLine(schema);
+            //Schemas schema = modelsSwagger["UserDTO"];
+            //Console.WriteLine(schema);
+
+            foreach (var path in pathsDTO)
+            {
+                Console.WriteLine(path.ToString());
+                Console.WriteLine("\n\n");
+            }
 
             Console.WriteLine(swaggerDocument);
 

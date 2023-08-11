@@ -6,5 +6,14 @@ namespace SwaggerEndpoint.Models
     {
         [JsonProperty("content")]
         public Content Content;
+
+        public override string ToString()
+        {
+            if (Content != null)
+                return $"Content: {Content}";
+
+            return "";
+        }
+
     }
 }

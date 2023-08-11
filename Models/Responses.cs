@@ -6,5 +6,11 @@ namespace SwaggerEndpoint.Models
     {
         [JsonProperty("description")]
         public string Description;
+
+        public override string ToString()
+        {
+            return $"Description: {Description}";
+        }
+
     }
 }

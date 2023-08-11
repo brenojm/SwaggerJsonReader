@@ -14,9 +14,17 @@ namespace SwaggerEndpoint.Models
         public bool Required;
 
         [JsonProperty("schema")]
-        public Dictionary<string, string> SchemaParameters;
+        public SchemaParameter SchemaParameters;
 
-
+        public override string ToString()
+        {
+            List<string> parts = new List<string> { $"Name: {Name}, In: {In}, Required: {Required}" };
+            if (SchemaParameters != null)
+            {
+                
+            }
+            return string.Join(", ", parts);
+        }
 
     }
 }
